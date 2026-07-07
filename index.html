@@ -18,7 +18,8 @@
 }
 
 body{
-    background:linear-gradient(135deg,#EAF6FF,#F7FBFF);
+    /* Updated background to a soft purple gradient */
+    background:linear-gradient(135deg, #f3f0ff, #e9e5ff);
     min-height:100vh;
     display:flex;
     justify-content:center;
@@ -35,7 +36,7 @@ body{
     background:white;
     border-radius:20px;
     padding:40px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+    box-shadow:0 15px 40px rgba(123, 104, 238, 0.15);
 }
 
 .header{
@@ -44,7 +45,7 @@ body{
 }
 
 .header h1{
-    color:#2563eb;
+    color:#7B68EE;
     font-size:30px;
     margin-bottom:10px;
 }
@@ -70,7 +71,7 @@ input[type="email"],
 input[type="time"]{
     width:100%;
     padding:15px;
-    border:2px solid #dbeafe;
+    border:2px solid #e0dcfc;
     border-radius:12px;
     outline:none;
     font-size:15px;
@@ -80,7 +81,7 @@ input[type="time"]{
 select{
     width:100%;
     padding:15px;
-    border:2px solid #dbeafe;
+    border:2px solid #e0dcfc;
     border-radius:12px;
     font-size:15px;
     outline:none;
@@ -89,15 +90,15 @@ select{
 }
 
 select:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    border-color:#7B68EE;
+    box-shadow:0 0 0 4px rgba(123, 104, 238, 0.15);
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="time"]:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+    border-color:#7B68EE;
+    box-shadow:0 0 0 4px rgba(123, 104, 238, 0.15);
 }
 
 .radio-group{
@@ -115,8 +116,8 @@ input[type="time"]:focus{
     display:flex;
     align-items:center;
     gap:10px;
-    background:#F8FBFF;
-    border:2px solid #dbeafe;
+    background:#faf9ff;
+    border:2px solid #e0dcfc;
     border-radius:12px;
     padding:15px;
     cursor:pointer;
@@ -125,12 +126,12 @@ input[type="time"]:focus{
 }
 
 .radio-option label:hover{
-    background:#EFF6FF;
-    border-color:#2563eb;
+    background:#f2efff;
+    border-color:#7B68EE;
 }
 
 input[type="radio"]{
-    accent-color:#2563eb;
+    accent-color:#7B68EE;
     transform:scale(1.2);
 }
 
@@ -140,7 +141,7 @@ button{
     padding:16px;
     border:none;
     border-radius:12px;
-    background:#2563eb;
+    background:#7B68EE;
     color:white;
     font-size:17px;
     font-weight:600;
@@ -149,15 +150,15 @@ button{
 }
 
 button:hover{
-    background:#1d4ed8;
+    background:#6a5acd;
     transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(37,99,235,0.25);
+    box-shadow:0 10px 20px rgba(123, 104, 238, 0.3);
 }
 
 .success{
     display:none;
     margin-top:25px;
-    background:#E8FFF1;
+    background:#e8fff1;
     color:#0B8A45;
     padding:16px;
     border-radius:12px;
@@ -166,19 +167,15 @@ button:hover{
 }
 
 @media(max-width:768px){
-
-.form-card{
-    padding:25px;
-}
-
-.radio-group{
-    flex-direction:column;
-}
-
-.header h1{
-    font-size:25px;
-}
-
+    .form-card{
+        padding:25px;
+    }
+    .radio-group{
+        flex-direction:column;
+    }
+    .header h1{
+        font-size:25px;
+    }
 }
 
 </style>
@@ -408,18 +405,6 @@ As Needed
 
 </div>
 
-<div class="form-group">
-
-    <label for="medicationTime">
-        What time should the medication be taken?
-    </label>
-
-    <input
-        type="time"
-        id="medicationTime"
-        required>
-
-</div>
 
 <!-- Food -->
 <div class="form-group">
@@ -536,12 +521,6 @@ async function submitMedication(e){
 
     medication:
       medicationName,
-
-    dosage:
-      document.getElementById("dosage").value,
-
-    medicationTime:
-      document.getElementById("medicationTime").value,
 
     frequency:
       frequency,
