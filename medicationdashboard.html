@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Dashboard | Remi+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #f3f0ff, #e9e5ff); min-height: 100vh; padding: 40px; }
+        
+        /* Navbar Styling */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: rgba(255,255,255,0.8); border-radius: 50px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .logo { font-weight: 700; color: #7B68EE; font-size: 24px; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: #333; font-weight: 500; }
+        .login-btn { background: #7B68EE; color: white; padding: 10px 25px; border-radius: 20px; text-decoration: none; }
+
+        /* Dashboard Container */
+        .container { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 15px 40px rgba(123, 104, 238, 0.15); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { color: #333; }
+        
+        /* Controls */
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"] { padding: 10px; border: 2px solid #e0dcfc; border-radius: 10px; flex: 1; }
+        .add-btn { background: #7B68EE; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 15px; color: #7B68EE; border-bottom: 2px solid #e0dcfc; }
+        td { padding: 15px; border-bottom: 1px solid #eee; color: #555; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Remi+</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">AI Chat</a>
+            <a href="#">Medications</a>
+            <a href="#">Appointments</a>
+            <a href="#">Contact</a>
+            <a href="#" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <!-- Replace your existing header section with this: -->
+<div class="header">
+    <h1>Medication List</h1>
+    <!-- Wrapping the button in an anchor tag -->
+    <a href="index.html" style="text-decoration: none;">
+        <button class="add-btn">+ Add Medication</button>
+    </a>
+</div>
+        
+        <input type="text" placeholder="Search medications..." style="width: 100%; margin-bottom: 20px;">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Medication Name</th>
+                    <th>Dosage</th>
+                    <th>Time</th>
+                    <th>Frequency</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="medTableBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Example: Fetch data from your n8n webhook
+        async function fetchMedications() {
+            try {
+                const response = await fetch("YOUR_N8N_WEBHOOK_URL");
+                const data = await response.json();
+                const tbody = document.getElementById("medTableBody");
+                
+                data.forEach(item => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.patientName}</td>
+                            <td>${item.medication}</td>
+                            <td>${item.dosage}</td>
+                            <td>${item.time}</td>
+                            <td>${item.frequency}</td>
+                            <td>Pending</td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.log("Could not load data.");
+            }
+        }
+        fetchMedications();
+    </script>
+</body>
+</html>
