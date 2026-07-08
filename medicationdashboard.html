@@ -73,30 +73,42 @@
     </div>
 
     <script>
-        // Example: Fetch data from your n8n webhook
         async function fetchMedications() {
-            try {
-                const response = await fetch("YOUR_N8N_WEBHOOK_URL");
-                const data = await response.json();
-                const tbody = document.getElementById("medTableBody");
-                
-                data.forEach(item => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${item.patientName}</td>
-                            <td>${item.medication}</td>
-                            <td>${item.dosage}</td>
-                            <td>${item.time}</td>
-                            <td>${item.frequency}</td>
-                            <td>Pending</td>
-                        </tr>
-                    `;
-                });
-            } catch (error) {
-                console.log("Could not load data.");
-            }
+        const tbody = document.getElementById("medTableBody");
+        
+        try {
+            // Replace with your specific n8n GET Webhook URL
+            const response = await fetch("YOUR_N8N_GET_WEBHOOK_URL");
+            
+            if (!response.ok) throw new Error("Failed to fetch data");
+            
+            const data = await response.json();
+            
+            // Clear existing rows
+            tbody.innerHTML = "";
+            
+            // Populate table
+            data.forEach(item => {
+                const row = `
+                    <tr>
+                        <td>${item.patientName || 'N/A'}</td>
+                        <td>${item.medication || 'N/A'}</td>
+                        <td>${item.dosage || 'N/A'}</td>
+                        <td>${item.time || 'N/A'}</td>
+                        <td>${item.frequency || 'N/A'}</td>
+                        <td><span style="color: #7B68EE; font-weight: 600;">Active</span></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error("Error loading data:", error);
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Could not load medications. Please check your connection.</td></tr>`;
         }
-        fetchMedications();
+    }
+
+    // Call the function when the page loads
+    window.onload = fetchMedications;
     </script>
 </body>
 </html>
