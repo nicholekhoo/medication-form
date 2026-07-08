@@ -45,14 +45,11 @@
         </div>
     </nav>
 
-    <!-- Replace your existing header section with this: -->
-<div class="header">
-    <h1>Medication List</h1>
-    <!-- Wrapping the button in an anchor tag -->
-    <a href="index.html" style="text-decoration: none;">
-        <button class="add-btn">+ Add Medication</button>
-    </a>
-</div>
+    <div class="container">
+        <div class="header">
+            <h1>Medication List</h1>
+            <button class="add-btn">+ Add Medication</button>
+        </div>
         
         <input type="text" placeholder="Search medications..." style="width: 100%; margin-bottom: 20px;">
 
@@ -73,42 +70,29 @@
     </div>
 
     <script>
+        // Example: Fetch data from your n8n webhook
         async function fetchMedications() {
-        const tbody = document.getElementById("medTableBody");
-        
-        try {
-            // Replace with your specific n8n GET Webhook URL
-            const response = await fetch("YOUR_N8N_GET_WEBHOOK_URL");
-            
-            if (!response.ok) throw new Error("Failed to fetch data");
-            
-            const data = await response.json();
-            
-            // Clear existing rows
-            tbody.innerHTML = "";
-            
-            // Populate table
-            data.forEach(item => {
-                const row = `
-                    <tr>
-                        <td>${item.patientName || 'N/A'}</td>
-                        <td>${item.medication || 'N/A'}</td>
-                        <td>${item.dosage || 'N/A'}</td>
-                        <td>${item.time || 'N/A'}</td>
-                        <td>${item.frequency || 'N/A'}</td>
-                        <td><span style="color: #7B68EE; font-weight: 600;">Active</span></td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-        } catch (error) {
-            console.error("Error loading data:", error);
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Could not load medications. Please check your connection.</td></tr>`;
+            try {
+                const response = await fetch("https://n8ngc.codeblazar.org/webhook/medication");
+                const data = await response.json();
+                const tbody = document.getElementById("medTableBody");
+                data.forEach(item => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.patientName}</td>
+                            <td>${item.medication}</td>
+                            <td>${item.dosage}</td>
+                            <td>${item.time}</td>
+                            <td>${item.frequency}</td>
+                            <td>Pending</td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.log("Could not load data.");
+            }
         }
-    }
-
-    // Call the function when the page loads
-    window.onload = fetchMedications;
+        fetchMedications();
     </script>
 </body>
 </html>
